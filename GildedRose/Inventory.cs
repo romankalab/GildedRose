@@ -22,8 +22,23 @@ namespace GildedRose
         /// </summary>
         public void UpdateQuality()
         {
-            // TODO ...
-            // Hint: Iterate through this.items and check Name property to access specific item
+            foreach(Item item in items)
+            {
+                if (item.Quality < 0)
+                {
+                    item.Quality = 0;
+                }
+                if (item.Quality > 50)
+                {
+                    item.Quality = 50;
+                }
+                item.SellIn -= 1;
+                item.Quality -= 1;
+                if (item.SellIn <= 0)
+                {
+                    item.Quality -= 1;
+                }
+            }
         }
     }
 }
