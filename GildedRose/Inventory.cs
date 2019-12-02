@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System;
 
 namespace GildedRose
 {
@@ -22,22 +23,15 @@ namespace GildedRose
         /// </summary>
         public void UpdateQuality()
         {
-            foreach(Item item in items)
+            int qdecrease = 1;
+            foreach (Item item in items)
             {
-                if (item.Quality < 0)
-                {
-                    item.Quality = 0;
-                }
-                if (item.Quality > 50)
-                {
-                    item.Quality = 50;
-                }
-                item.SellIn -= 1;
-                item.Quality -= 1;
-                if (item.SellIn <= 0)
-                {
-                    item.Quality -= 1;
-                }
+                item.SellIn = item.SellIn - 1;
+                if (item.SellIn < 0)
+                    qdecrease = qdecrease * 2;
+
+                if (item.Name.Contains("Conjured"))
+                    qdecrease = qdecrease * 2;
             }
         }
     }
