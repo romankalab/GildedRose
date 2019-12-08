@@ -24,11 +24,12 @@ namespace GildedRose
         public void UpdateQuality()
         {
             int qdecrease = 1;
-            int qincrease = 1;
             int originalq = 0;
+            int originals = 0;
             foreach (Item item in items)
             {
                 originalq = item.Quality;
+                originals = item.SellIn;
                 item.SellIn = item.SellIn - 1;
                 if (item.SellIn < 0)
                     qdecrease = qdecrease * 2;
@@ -42,7 +43,20 @@ namespace GildedRose
                 if (item.Name.Contains("Aged Brie"))
                 {
                     item.Quality = originalq;
-                    item.Quality = item.Quality + qincrease;
+                    item.Quality = item.Quality + 1;
+                    if (item.SellIn < 1)
+                        item.Quality = item.Quality + 1;
+                }
+                if (item.Name.Contains("Backstage passes"))
+                {
+                    item.Quality = originalq;
+                    item.Quality = item.Quality + 1;
+                    if (item.SellIn < 11)
+                        item.Quality = item.Quality + 1;
+                    if (item.SellIn < 6)
+                        item.Quality = item.Quality + 1;
+                    if (item.SellIn < 1)
+                        item.Quality = 0;
                 }
 
                 if (item.Quality < 0)
@@ -51,7 +65,11 @@ namespace GildedRose
                     item.Quality = 50;
 
                 if (item.Name.Contains("Sulfuras"))
+                {
                     item.Quality = originalq;
+                    item.SellIn = originals;
+                }
+                qdecrease = 1;
             }
         }
     }
